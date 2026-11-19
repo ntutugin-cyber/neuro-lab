@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>НейроЛаб — интерактивный учебник по нейросетям</title>
+<meta name="description" content="Понятный интерактивный учебник по нейронным сетям: нейрон, обучение с учителем и без, CNN, RNN, GAN, Transformer и LLM. С живыми демо и конструктором нейросети.">
+<meta name="theme-color" content="#070a13">
+<meta property="og:title" content="НейроЛаб — интерактивный учебник по нейросетям">
+<meta property="og:description" content="9 глав, 8 живых демо, конструктор нейросети. Для людей с нулевыми знаниями.">
+<meta property="og:image" content="assets/banner.svg">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Manrope:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<script type="module" src="js/main.js"></script>
+</head>
+<body>
+
+<div class="bg" aria-hidden="true">
+  <div class="aurora a1"></div><div class="aurora a2"></div><div class="aurora a3"></div>
+  <div class="gridlines"></div><div class="grain"></div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="nav-in container">
+    <a class="logo" href="#top" aria-label="НейроЛаб — на главную">
+      <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset=".5" stop-color="#22d3ee"/><stop offset="1" stop-color="#ff7ac8"/></linearGradient></defs><path d="M6 8 L16 16 M6 24 L16 16 M16 16 L26 10 M16 16 L26 22" stroke="url(#lg)" stroke-width="2" fill="none"/><circle cx="6" cy="8" r="3.4" fill="#a78bfa"/><circle cx="6" cy="24" r="3.4" fill="#22d3ee"/><circle cx="16" cy="16" r="4.4" fill="url(#lg)"/><circle cx="26" cy="10" r="3.4" fill="#ff7ac8"/><circle cx="26" cy="22" r="3.4" fill="#a3e635"/></svg>
+      <span>Нейро<b>Лаб</b></span>
+    </a>
+    <nav class="nav-links" id="nav-links" aria-label="Разделы">
+      <a href="#basics">Основы</a><a href="#types">Типы</a><a href="#learning">Обучение</a>
+      <a href="#cnn">CNN</a><a href="#rnn">RNN</a><a href="#gan">GAN</a><a href="#llm">LLM</a>
+      <a href="#playground" class="nav-cta">Песочница</a><a href="#quiz">Тест</a>
+    </nav>
+    <button class="burger" id="nav-burger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <canvas id="hero-cv" aria-hidden="true"></canvas>
+  <div class="hero-in container">
+    <p class="hero-kicker mono reveal">интерактивный учебник · без математики на старте · всё считается честно</p>
+    <h1 class="reveal" data-d="1">Пойми <span class="grad-text">нейросети</span>.<br>По-настоящему.</h1>
+    <p class="hero-lede reveal" data-d="2">От одного нейрона до архитектуры ChatGPT, Claude и Qwen. Каждая глава — с живой демонстрацией, которую можно крутить, ломать и собирать заново. В конце — собственная нейросеть, которую ты обучишь прямо в браузере.</p>
+    <div class="hero-cta reveal" data-d="3">
+      <a class="btn btn-primary" href="#basics">Начать с нуля →</a>
+      <a class="btn" href="#playground">Сразу в песочницу</a>
+    </div>
+    <div class="hero-badges reveal" data-d="4">
+      <span class="badge">9 глав</span><span class="badge">8 живых демо</span><span class="badge">настоящий backprop</span><span class="badge">0 библиотек</span>
+    </div>
+    <span class="float-chip f1 mono" aria-hidden="true">σ(w·x + b)</span>
+    <span class="float-chip f2 mono" aria-hidden="true">∇L → шаг</span>
+    <span class="float-chip f3 mono" aria-hidden="true">softmax(QKᵀ/√d)</span>
+  </div>
+  <a class="scroll-hint" href="#basics" aria-label="Листай вниз"><span></span></a>
+</section>
+
+<!-- ================= 01 ОСНОВЫ ================= -->
+<section class="sec" id="basics">
+  <div class="container">
+    <header class="sec-head reveal">
+      <p class="kicker mono">01 · основы</p>
+      <h2>Что такое <span class="grad-text">нейросеть</span></h2>
+      <p class="lede">Нейросеть — это не копия мозга и не магия. Это математическая функция с большим количеством настраиваемых чисел. Она не «понимает» мир — она подбирает числа так, чтобы на знакомых примерах выдавать правильные ответы, и надеется, что на новых примерах тоже сработает.</p>
+    </header>
+
+    <div class="grid2 reveal">
+      <article class="card">
+        <h3>Чем это отличается от обычной программы</h3>
+        <p>Обычная программа: человек пишет <b>правила</b>, программа применяет их к данным и выдаёт ответы. Нейросеть переворачивает процесс: мы даём <b>данные и правильные ответы</b>, а правила (числа-веса) сеть находит сама. Никто не писал ей «у кошки усы и треугольные уши» — она вывела это из тысяч фотографий.</p>
+        <div class="vs mono">
+          <div><span class="ok">классика:</span> правила + данные → ответы</div>
+          <div><span class="acc">нейросеть:</span> данные + ответы → правила</div>
+        </div>
+      </article>
+      <article class="card">
+        <h3>Из чего она собрана</h3>
+        <ul class="dots">
+          <li><b>Нейрон</b> — крошечная ячейка: складывает входные числа с весами и пропускает сумму через функцию активации.</li>
+          <li><b>Слой</b> — группа нейронов, работающих параллельно. Входной слой принимает данные, скрытые слои их преобразуют, выходной даёт ответ.</li>
+          <li><b>Веса</b> — числа на связях между нейронами. Именно они «знают» всё, что знает сеть. Обучение = подбор весов.</li>
+          <li><b>Смещение (bias)</b> — личная добавка каждого нейрона к сумме, сдвигает его порог срабатывания.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="demo reveal" id="demo-neuron">
+      <div class="demo-head"><span class="demo-dot"></span><h3>Живой нейрон — покрути его</h3><span class="demo-status" id="n-status">сигнал идёт слева направо</span></div>
+      <div class="demo-body cols">
+        <div class="demo-controls">
+          <p class="ctl-title">Входы x</p>
+          <label class="rng"><span>x₁</span><input id="nx1" type="range" min="0" max="1" step="0.05" value="1"><output>1.00</output></label>
+          <label class="rng"><span>x₂</span><input id="nx2" type="range" min="0" max="1" step="0.05" value="0.5"><output>0.50</output></label>
+          <label class="rng"><span>x₃</span><input id="nx3" type="range" min="0" max="1" step="0.05" value="0"><output>0.00</output></label>
+          <p class="ctl-title">Веса w и смещение b</p>
+          <label class="rng"><span>w₁</span><input id="nw1" type="range" min="-2" max="2" step="0.05" value="0.8"><output>0.80</output></label>
+          <label class="rng"><span>w₂</span><input id="nw2" type="range" min="-2" max="2" step="0.05" value="-0.4"><output>-0.40</output></label>
+          <label class="rng"><span>w₃</span><input id="nw3" type="range" min="-2" max="2" step="0.05" value="0.7"><output>0.70</output></label>
+          <label class="rng"><span>b</span><input id="nb" type="range" min="-2" max="2" step="0.05" value="-0.2"><output>-0.20</output></label>
+          <p class="ctl-title">Функция активации</p>
+          <select id="nact" class="select">
+            <option value="sigmoid" selected>Сигмоида σ(z)</option>
+            <option value="tanh">tanh(z)</option>
+            <option value="relu">ReLU max(0,z)</option>
+            <option value="step">Порог (перцептрон)</option>
+          </select>
+          <p class="ctl-title">Готовые настройки</p>
+          <div class="btn-row">
+            <button class="btn btn-sm" data-npreset="and">Логическое И</button>
+            <button class="btn btn-sm" data-npreset="or">Логическое ИЛИ</button>
+            <button class="btn btn-sm" data-npreset="not">НЕ (по x₁)</button>
+          </div>
+        </div>
+        <div class="demo-view">
+          <div class="cv cv-neuron"><canvas id="nrv" role="img" aria-label="Схема одного нейрона с анимацией сигнала"></canvas></div>
+          <div class="formula mono" id="nformula">z = …</div>
+          <div class="n-out"><span>Выход нейрона</span><div class="n-bar"><i id="nbar"></i></div><b class="mono" id="nbig">0.00</b></div>
+          <div class="cv cv-curve"><canvas id="nrc" role="img" aria-label="График функции активации с текущей точкой"></canvas></div>
+        </div>
+      </div>
+      <div class="demo-foot">Толщина связи = сила веса, цвет = знак (голубой «+», розовый «−»). Нейрон вычисляет <span class="mono">z = x₁w₁ + x₂w₂ + x₃w₃ + b</span>, затем <span class="mono">a = f(z)</span>. Попробуй пресеты: это классический перцептрон 1958 года — он уже умеет решать И и ИЛИ.</div>
+    </div>
+
+    <div class="grid3 reveal">
+      <article class="card mini"><h4>Зачем веса разных знаков</h4><p>Положительный вес говорит «этот признак — за», отрицательный — «против». Нейрон «загорающийся при усах и против при клюве» — уже детектор кошки.</p></article>
+      <article class="card mini"><h4>Зачем функция активации</h4><p>Без неё любая сеть, сколько бы слоёв ни было, схлопывается в одну линейную формулу. Нелинейность (σ, tanh, ReLU) позволяет выучивать кривые границы и сложные закономерности — например, XOR.</p></article>
+      <article class="card mini"><h4>Почему слоёв много</h4><p>Каждый слой строит признаки из признаков предыдущего: пиксели → края → текстуры → части → объекты. Глубина = иерархия абстракций, отсюда название «глубокое обучение».</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 02 ТИПЫ ================= -->
+<section class="sec" id="types">
+  <div class="container">
+    <header class="sec-head reveal">
+      <p class="kicker mono">02 · карта семейства</p>
+      <h2>Какие бывают <span class="grad-text">нейросети</span></h2>
+      <p class="lede">«Нейросеть» — это семейство архитектур, как «транспорт» — это и велосипед, и самолёт. Архитектуру выбирают под форму данных: картинка, последовательность, таблица, текст. Ниже — карта с фильтром по задачам; кликай, чтобы сузить.</p>
+    </header>
+    <div class="chips reveal" id="type-filters">
+      <button class="chip active" data-filter="all">Все</button>
+      <button class="chip" data-filter="img">Изображения</button>
+      <button class="chip" data-filter="text">Текст</button>
+      <button class="chip" data-filter="audio">Звук</button>
+      <button class="chip" data-filter="gen">Генерация</button>
+      <button class="chip" data-filter="tab">Числа и таблицы</button>
+      <button class="chip" data-filter="rl">Игры и роботы</button>
+    </div>
+    <div class="types-grid reveal" id="types-grid">
+      <article class="type-card" data-tags="tab"><div class="tc-ico">◉</div><h3>Перцептрон / MLP</h3><p class="tc-use">Таблицы, числа, простые зависимости</p><p>Полносвязные слои: каждый нейрон соединён с каждым. База, из которой выросло всё остальное. Хорош для кредитного скоринга, прогноза спроса, задач с признаками-столбцами.</p><a href="#playground" class="tc-link">Собрать свой MLP →</a></article>
+      <article class="type-card" data-tags="img audio"><div class="tc-ico">▦</div><h3>Свёрточные · CNN</h3><p class="tc-use">Картинки, видео, спектрограммы звука</p><p>Маленькое окно-фильтр скользит по изображению и ищет один и тот же узор в любом месте. Экономит миллионы весов. Медицина, автопилоты, распознавание лиц.</p><a href="#cnn" class="tc-link">Глава про CNN →</a></article>
+      <article class="type-card" data-tags="text audio tab"><div class="tc-ico">↻</div><h3>Рекуррентные · RNN / LSTM</h3><p class="tc-use">Последовательности: текст, звук, временные ряды</p><p>Читает данные по шагам и несёт «память» — скрытое состояние. LSTM добавляет управляемые ворота памяти. Прогноз курсов, датчики, старый машинный перевод.</p><a href="#rnn" class="tc-link">Глава про RNN →</a></article>
+      <article class="type-card" data-tags="text img audio gen"><div class="tc-ico">✳</div><h3>Transformer</h3><p class="tc-use">Почти всё современное</p><p>Механизм внимания: каждый элемент сам решает, на какие другие смотреть. Читает всю последовательность параллельно. Основа ChatGPT, Claude, Qwen, Gemini.</p><a href="#llm" class="tc-link">Глава про LLM →</a></article>
+      <article class="type-card" data-tags="img gen"><div class="tc-ico">⚔</div><h3>GAN · состязательные</h3><p class="tc-use">Генерация реалистичных данных</p><p>Две сети играют в игру: генератор подделывает, дискриминатор ловит подделки. Взаимная тренировка рождает фотореалистичные лица, апскейл, перенос стиля.</p><a href="#gan" class="tc-link">Глава про GAN →</a></article>
+      <article class="type-card" data-tags="img tab gen"><div class="tc-ico">⇶</div><h3>Автоэнкодеры</h3><p class="tc-use">Сжатие, шумоподавление, аномалии</p><p>Сеть учится сжимать вход в узкое «горлышко» и восстанавливать обратно. В горлышке остаётся самая суть данных. Поиск аномалий на производстве, денойзинг.</p><span class="tc-tag mono">обучение без учителя</span></article>
+      <article class="type-card" data-tags="img audio gen"><div class="tc-ico">❋</div><h3>Диффузионные</h3><p class="tc-use">Генерация изображений и видео</p><p>Учатся убирать шум: из полного хаоса шаг за шагом «проявляют» картинку, как фотограф в тёмной комнате. Stable Diffusion, Flux, видеомодели. Медленнее GAN, но стабильнее и качественнее.</p><span class="tc-tag mono">вытеснили GAN в генерации</span></article>
+      <article class="type-card" data-tags="rl"><div class="tc-ico">♟</div><h3>Обучение с подкреплением</h3><p class="tc-use">Игры, роботы, управление</p><p>Агент действует в среде и получает награду. Сеть-политика учится выбирать действия, максимизирующие награду. AlphaGo, роботы-манипуляторы, а ещё RLHF — доводка LLM под человеческие предпочтения.</p><span class="tc-tag mono">учится на последствиях</span></article>
+    </div>
+    <div class="note reveal"><b>Важно:</b> архитектуры комбинируются. Whisper (речь→текст) = CNN по спектрограмме + Transformer. Диффузионные модели используют attention. Современные LLM мультимодальны: картинки проходят через визуальный энкодер и попадают в тот же Transformer токенами.</div>
+  </div>
+</section>
+
+<!-- ================= 03 ОБУЧЕНИЕ ================= -->
+<section class="sec" id="learning">
+  <div class="container">
+    <header class="sec-head reveal">
+      <p class="kicker mono">03 · как сети учатся</p>
+      <h2>С учителем, без учителя <span class="grad-text">и между ними</span></h2>
+      <p class="lede">Обучение — это всегда одно и то же: сеть делает предсказание, мы измеряем ошибку числом (функция потерь, loss) и чуть-чуть подправляем каждый вес в сторону уменьшения ошибки. Повторить миллион раз. Разница между подходами — откуда берутся «правильные ответы».</p>
+    </header>
+
+    <div class="grid2 reveal">
+      <article class="card">
+        <h3><span class="pill ok">с учителем</span> Supervised learning</h3>
+        <p>У каждого примера есть <b>метка</b>: фото → «кошка», письмо → «спам», квартира → цена. Метки ставят люди (разметчики) — дорого, но точно. Сеть сравнивает свой ответ с меткой и учится.</p>
+        <ul class="dots">
+          <li>Классификация: спам/не спам, диагноз, тон отзыва.</li>
+          <li>Регрессия: цена, температура, спрос — любое число.</li>
+          <li>Так дообучают LLM на диалогах «вопрос → хороший ответ» (SFT).</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3><span class="pill info">без учителя</span> Unsupervised learning</h3>
+        <p>Меток нет — сеть сама ищет <b>структуру</b> в данных: похожие объекты в кучки (кластеризация), компактное представление (автоэнкодер), выбросы (аномалии).</p>
+        <ul class="dots">
+          <li>Сегментация клиентов без заранее заданных групп.</li>
+          <li>Поиск странных транзакций и брака на заводе.</li>
+          <li><b>Self-supervised</b> — хитрый подвид: метки делают из самих данных. «Спрячь следующее слово и угадай его» — так предобучают все LLM на триллионах токенов без единого разметчика.</li>
+        </ul>
+      </article>
+    </div>
+
+    <article class="card wide reveal">
+      <h3>Градиентный спуск и backprop — механика чуда, по шагам</h3>
+      <div class="steps4">
+        <div class="s4"><b class="mono">1 · forward</b><p>Прогоняем пример через сеть слева направо. Получили ответ, например 0.73, а правда — 1.</p></div>
+        <div class="s4"><b class="mono">2 · loss</b><p>Ошибка — число: насколько ответ далёк от правды. Для «да/нет» обычно бинарная кросс-энтропия: чем увереннее сеть ошибается, тем больше штраф.</p></div>
+        <div class="s4"><b class="mono">3 · backward</b><p>Обратный проход: по правилу цепочки вычисляем, <i>как каждый вес повлиял на ошибку</i> — его градиент. Ошибка «раздаётся» назад по слоям пропорционально вкладу.</p></div>
+        <div class="s4"><b class="mono">4 · шаг</b><p>Каждый вес сдвигаем против его градиента: <span class="mono">w ← w − lr·∂L/∂w</span>. Learning rate (lr) — размер шага. Это спуск с горы в тумане: щупаем склон ногой и делаем маленький шаг вниз.</p></div>
+      </div>
+      <p class="muted">Один проход по всему датасету = <b>эпоха</b>. Данные едят пачками (<b>батчами</b>) — так梯度 шумнее, но обучение быстрее. Слишком большой lr — перепрыгиваем долину; слишком маленький — учимся вечность. Переобучение — когда сеть вызубрила тренировочные примеры, но проваливается на новых; лечится разделением train/test и регуляризацией.</p>
+    </article>
+
+    <div class="grid2 demos2">
+      <div class="demo reveal">
+        <div class="demo-head"><span class="demo-dot"></span><h3>С учителем: граница решений</h3><span class="demo-status" id="sup-status">готова</span></div>
+        <div class="demo-view pad">
+          <div class="cv cv-square"><canvas id="sup-cv" role="img" aria-label="Классификатор учится разделять два класса точек"></canvas></div>
+          <div class="stats"><div class="stat"><b id="sup-epoch">0</b><span>эпоха</span></div><div class="stat"><b id="sup-loss">—</b><span>ошибка</span></div><div class="stat"><b id="sup-acc">—</b><span>точность</span></div></div>
+          <div class="cv cv-chart"><canvas id="sup-chart" aria-label="График ошибки"></canvas></div>
+        </div>
+        <div class="demo-controls row">
+          <button class="btn btn-primary btn-sm" id="sup-play">▶ Обучать</button>
+          <button class="btn btn-sm" id="sup-step">Шаг</button>
+          <button class="btn btn-sm" id="sup-data">Новые данные</button>
+          <button class="btn btn-sm" id="sup-reset">Сброс</button>
+          <label class="rng wide"><span>lr</span><input id="sup-lr" type="range" min="0.02" max="1" step="0.02" value="0.3"><output>0.30</output></label>
+        </div>
+        <div class="demo-foot">Один нейрон с двумя входами учится разделять голубые и розовые точки. Фон — его «уверенность» в каждом участке плоскости. Смотри, как граница поворачивается, а ошибка падает: это и есть градиентный спуск вживую.</div>
+      </div>
+      <div class="demo reveal">
+        <div class="demo-head"><span class="demo-dot"></span><h3>Без учителя: k-means</h3><span class="demo-status" id="km-status">готов</span></div>
+        <div class="demo-view pad">
+          <div class="cv cv-square"><canvas id="km-cv" role="img" aria-label="Кластеризация точек методом k-means"></canvas></div>
+          <div class="stats"><div class="stat"><b id="km-iter">0</b><span>итерация</span></div><div class="stat"><b id="km-inertia">—</b><span>разброс</span></div><div class="stat"><b id="km-kstat">3</b><span>кластеров</span></div></div>
+        </div>
+        <div class="demo-controls row">
+          <div class="step"><button class="step-btn" id="km-kminus" aria-label="меньше кластеров">−</button><span class="step-val" id="km-kval">3</span><button class="step-btn" id="km-kplus" aria-label="больше кластеров">+</button></div>
+          <button class="btn btn-primary btn-sm" id="km-auto">▶ Авто</button>
+          <button class="btn btn-sm" id="km-step">Шаг</button>
+          <button class="btn btn-sm" id="km-data">Новые точки</button>
+        </div>
+        <div class="demo-foot">Никаких меток: алгоритм сам расставляет центры (ромбы), привязывает точки к ближайшему центру и сдвигает центры в середину своих кучек. Повтори — и структура найдена. Попробуй k=2 или k=5 на трёх настоящих кучках: лишние центры «разрежут» кластер, недостающие — склеят.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 04 CNN ================= -->
+<section class="sec" id="cnn">
+  <div class="container">
+    <header class="sec-head reveal">
+      <p class="kicker mono">04 · зрение</p>
+      <h2>Свёрточные сети: <span class="grad-text">как машина видит</span></h2>
+      <p class="lede">Фото 1000×1000 — это 3 миллиона входов. Полносвязный слой на миллион нейронов потребовал бы 3 триллиона весов. CNN решает проблему красиво: маленький фильтр 3×3 (всего 9 весов!) скользит по всей картинке и ищет один узор везде. Кошка в углу и кошка в центре — один и тот же фильтр.</p>
+    </header>
+    <div class="grid3 reveal">
+      <article class="card mini"><h4>Свёртка</h4><p>Окно 3×3 умножается на ядро почленно, произведения складываются — одно число карты признаков. Сдвинули окно (stride) — повторили. Ядро «вертикальный край» подсветит все вертикальные границы изображения.</p></article>
+      <article class="card mini"><h4>Pooling</h4><p>Уменьшение карты: из каждого блока 2×2 берём максимум. Картинка в 4 раза меньше, главное survives. Сеть перестаёт зависеть от точного положения узора — сдвиг на пиксель не страшен.</p></article>
+      <article class="card mini"><h4>Иерархия признаков</h4><p>Слой 1: края и пятна. Слой 2: углы, текстуры. Слой 3: глаза, колёса, буквы. Глубже — целые объекты. Каждый следующий слой свёртывает карты предыдущего: абстракции из абстракций.</p></article>
+    </div>
+    <div class="timeline mono reveal"><span>LeNet · 1998</span><i>→</i><span>AlexNet · 2012</span><i>→</i><span>VGG · 2014</span><i>→</i><span>ResNet · 2015</span><i>→</i><span>EfficientNet · 2019</span><i>→</i><span>ConvNeXt / ViT</span></div>
+    <div class="demo reveal" id="demo-cnn">
+      <div class="demo-head"><span class="demo-dot"></span><h3>Свёртка вживую: ядро ползёт по картинке</h3><span class="demo-status" id="cnn-status">нажми ▶</span></div>
+      <div class="demo-body cols rev">
+        <div class="demo-controls">
+          <p class="ctl-title">Ядро (фильтр) 3×3</p>
+          <select id="cnn-kernel" class="select">
+            <option value="sobelX" selected>Вертикальные края (Sobel X)</option>
+            <option value="sobelY">Горизонтальные края (Sobel Y)</option>
+            <option value="laplace">Все края (Лаплас)</option>
+            <option value="blur">Размытие</option>
+            <option value="sharpen">Резкость</option>
+          </select>
+          <table class="kernel mono" id="cnn-matrix" aria-label="Значения ядра"></table>
+          <p class="ctl-title">Управление</p>
+          <div class="btn-row">
+            <button class="btn btn-primary btn-sm" id="cnn-play">▶ Показ</button>
+            <button class="btn btn-sm" id="cnn-restart">↺ Сначала</button>
+          </div>
+          <label class="rng"><span>Темп</span><input id="cnn-speed" type="range" min="1" max="40" value="6"><output>6</output></label>
+          <label class="switch"><input type="checkbox" id="cnn-pooling"><span class="sw-track"></span><span>MaxPooling 2×2 после свёртки</span></label>
+          <label class="switch"><input type="checkbox" id="cnn-brush"><span class="sw-track"></span><span>Кисть: рисуй по входу</span></label>
+          <div class="formula mono" id="cnn-val">Σ окно·ядро = —</div>
+        </div>
+        <div class="demo-view cnn-view">
+          <figure><div class="cv cv-cnn"><canvas id="cnn-in" role="img" aria-label="Входное изображение 32 на 32"></canvas></div><figcaption>Вход 32×32 <span class="muted">· наведи/коснись для инспекции</span></figcaption></figure>
+          <figure><div class="cv cv-cnn"><canvas id="cnn-out" role="img" aria-label="Карта признаков после свёртки"></canvas></div><figcaption>Карта признаков 30×30 <span class="muted">· голубой «+», розовый «−»</span></figcaption></figure>
+          <figure id="cnn-poolwrap" class="hide"><div class="cv cv-cnn sm"><canvas id="cnn-pool" role="img" aria-label="Результат max pooling"></canvas></div><figcaption>MaxPool 15×15 <span class="muted">· в 4 раза меньше</span></figcaption></figure>
+        </div>
+      </div>
+      <div class="demo-foot">Одно ядро — 9 весов на всю картинку (это и есть «разделение весов»). Включи кисть и нарисуй что-нибудь: карта признаков пересчитается мгновенно. Именно так первый слой реальной CNN превращает пиксели в края — а дальше края складываются в части, части — в объекты.</div>
+    </div>
+    <div class="note reveal"><b>Где применяется:</b> рентген и МРТ, дефектоскопия на заводах, номерные знаки, Face ID, автопилоты (в связке с Transformer), распознавание рукописного текста. Даже внутри диффузионных генераторов картинок живут свёрточные блоки (U-Net).</div>
+  </div>
+</section>
+
+<!-- ================= 05 RNN ================= -->
+<section class="sec" id="rnn">
+  <div class="container">
+    <header class="sec-head reveal">
+      <p class="kicker mono">05 · память</p>
+      <h2>Рекуррентные сети: <span class="grad-text">чтение по слову</span></h2>
+      <p class="lede">«Собака укусила человека» и «Человек укусил собаку» — одинаковые слова, разный смысл. Порядок важен, а обычные сети его не видят. RNN читает последовательность по шагам и после каждого слова обновляет скрытое состояние h — вектор-«память» о прочитанном: <span class="mono">hₜ = tanh(Wx·xₜ + Wh·hₜ₋₁ + b)</span>. Их часто по ошибке зовут «рекурсивными»; рекурсивные (RecursiveNN) работают по деревьям разбора — редкий зверь, здесь речь о рекуррентных.</p>
+    </header>
+    <div class="grid3 reveal">
+      <article class="card mini"><h4>Одна сеть, много шагов</h4><p>Развёрнутая RNN — это одна и та же ячейка, применённая к каждому слову. Веса Wx и Wh общие для всех шагов: сеть учится «как обновлять память», а не отдельные правила для каждой позиции.</p></article>
+      <article class="card mini"><h4>Затухающий контекст</h4><p>Память перезаписывается на каждом шаге, и начало длинной фразы «размывается» — испорченный телефон из матриц. Градиенты при обучении через 100 шагов затухают до нуля. LSTM/GRU добавляют ворота: «запомнить», «забыть», «показать» — и держат контекст дольше.</p></article>
+      <article class="card mini"><h4>Почему уступили Transformer</h4><p>RNN обязана читать строго по очереди — нельзя распараллелить. Attention смотрит на любое слово напрямую, без цепочки пересказов. Быстрее обучение, дальше контекст. RNN остались в нишах: датчики, стриминг, крошечные модели.</p></article>
+    </div>
+    <div class="demo reveal" id="demo-rnn">
+      <div class="demo-head"><span class="demo-dot"></span><h3>RNN читает отзыв и судит о тоне</h3><span class="demo-status" id="rnn-status">выбери фразу и нажми ▶</span></div>
+      <div class="demo-body">
+        <div class="demo-controls row">
+          <select id="rnn-preset" class="select grow">
+            <option value="0" selected>«фильм был очень интересный и красивый»</option>
+            <option value="1">«скучный слишком длинный и предсказуемый фильм»</option>
+            <option value="2">«начало было скучный но финал очень интересный»</option>
+          </select>
+          <input id="rnn-text" class="text-in grow" type="text" maxlength="90" value="фильм был очень интересный и красивый" aria-label="Своя фраза">
+          <button class="btn btn-sm" id="rnn-apply">Применить</button>
+        </div>
+        <div class="rnn-words" id="rnn-words"></div>
+        <div class="rnn-mid">
+          <div class="rnn-state-wrap">
+            <p class="ctl-title">Скрытое состояние h (память, 4 числа)</p>
+            <div class="rnn-state" id="rnn-state"></div>
+            <div class="formula mono" id="rnn-formula">hₜ = tanh(Wx·xₜ + Wh·hₜ₋₁)</div>
+          </div>
+          <div class="rnn-heat-wrap">
+            <p class="ctl-title">Лента памяти: шаг × нейрон</p>
+            <div class="cv cv-heat"><canvas id="rnn-heat" role="img" aria-label="История скрытого состояния по шагам"></canvas></div>
+          </div>
+        </div>
+        <div class="rnn-out">
+          <span class="muted">негатив</span>
+          <div class="gauge"><i id="rnn-gauge"></i></div>
+          <span class="muted">позитив</span>
+          <b class="mono" id="rnn-outval">0.50</b>
+        </div>
+        <div class="demo-controls row">
+          <button class="btn btn-primary btn-sm" id="rnn-play">▶ Проиграть</button>
+          <button class="btn btn-sm" id="rnn-step">Слово →</button>
+          <button class="btn btn-sm" id="rnn-reset">↺ Сброс</button>
+          <label class="rng wide"><span>Темп</span><input id="rnn-speed" type="range" min="0.5" max="3" step="0.1" value="1"><output>1.0</output></label>
+        </div>
+      </div>
+      <div class="demo-foot">Третья фраза — эксперимент: начало негативное, конец позитивный. Смотри на ленту памяти: ранние шаги тускнеют, сеть лучше помнит конец. Это и есть затухающий контекст — причина, по которой придумали LSTM, а потом attention. Незнакомые слова получают нейтральный вектор (подсвечены пунктиром).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 06 GAN ================= -->
+<section class="sec" id="gan">
+  <div class="container">
+    <header class="sec-head reveal">
+      <p class="kicker mono">06 · состязание</p>
+      <h2>GAN: <span class="grad-text">фальшивомонетчик против эксперта</span></h2>
+      <p class="lede">2014 год, Ян Гудфеллоу: а что если тренировать две сети против друг друга? Генератор G превращает случайный шум в данные и никогда не видит настоящих примеров. Дискриминатор D видит и настоящие, и подделки, и учится их различать. G учится обманывать D, D — не обманываться. Единственная «разметка» — вердикт эксперта. В равновесии подделки неотличимы: D угадывает с вероятностью монетки, 50%.</p>
+    </header>
+    <div class="grid2 reveal">
+      <article class="card"><h3>Цикл тренировки</h3>
+        <ul class="dots">
+          <li><b>Шаг D:</b> показать пачку настоящих (метка 1) и пачку свежих подделок (метка 0), обновить веса D по ошибкам.</li>
+          <li><b>Шаг G:</b> сделать подделки, спросить D, и обновить веса G так, чтобы D чаще говорил «настоящее». Градиент течёт через D в G — эксперт невольно учит фальшивомонетчика.</li>
+          <li>Повторять. D не должен побеждать слишком сильно (G не получает полезного сигнала) и не должен проигрывать (сигнал теряет смысл).</li>
+        </ul>
+      </article>
+      <article class="card"><h3>Болезни и применение</h3>
+        <ul class="dots">
+          <li><b>Mode collapse:</b> G находит одну картинку, которая всегда обманывает D, и штампует только её. Разнообразие умирает.</li>
+          <li><b>Нестабильность:</b> две сети тянут одеяло — loss скачет, это нормально для GAN.</li>
+          <li><b>Применение:</b> лица (thispersondoesnotexist), апскейл старых фото и игр, перенос стиля, синтез данных для обучения, реставрация. В большой генерации GAN вытеснены диффузией, но GAN делают картинку за один проход — они быстрее.</li>
+        </ul>
+      </article>
+    </div>
+    <div class="demo reveal" id="demo-gan">
+      <div class="demo-head"><span class="demo-dot"></span><h3>Настоящий мини-GAN: генератор учит форму</h3><span class="demo-status" id="gan-status">нажми «Тренировать»</span></div>
+      <div class="demo-body cols">
+        <div class="demo-controls">
+          <p class="ctl-title">Цель (настоящие данные)</p>
+          <select id="gan-target" class="select">
+            <option value="ring" selected>Кольцо</option>
+            <option value="moons">Две луны</option>
+            <option value="square">Квадрат</option>
+          </select>
+          <div class="btn-row">
+            <button class="btn btn-primary btn-sm" id="gan-play">▶ Тренировать</button>
+            <button class="btn btn-sm" id="gan-step">Шаг</button>
+            <button class="btn btn-sm" id="gan-reset">↺ Заново</button>
+          </div>
+          <label class="rng"><span>lr</span><input id="gan-lr" type="range" min="0.005" max="0.05" step="0.005" value="0.02"><output>0.020</output></label>
+          <label class="rng"><span>Шагов/кадр</span><input id="gan-speed" type="range" min="1" max="12" value="4"><output>4</output></label>
+          <label class="switch"><input type="checkbox" id="gan-heat" checked><span class="sw-track"></span><span>Мнение дискриминатора (фон)</span></label>
+          <div class="stats col">
+            <div class="stat"><b id="gan-steps">0</b><span>шагов</span></div>
+            <div class="stat"><b id="gan-dloss">—</b><span>loss D</span></div>
+            <div class="stat"><b id="gan-gloss">—</b><span>loss G</span></div>
+          </div>
+        </div>
+        <div class="demo-view">
+          <div class="cv cv-gan"><canvas id="gan-cv" role="img" aria-label="GAN: настоящие и сгенерированные точки, поле дискриминатора"></canvas></div>
+          <div class="legend mono"><span><i class="dot-c"></i> настоящие</span><span><i class="dot-m"></i> подделки G</span><span><i class="dot-h"></i> фон: D считает «настоящим»</span></div>
+          <div class="cv cv-chart"><canvas id="gan-chart" aria-label="Графики ошибок D и G"></canvas></div>
+        </div>
+      </div>
+      <div class="demo-foot">Всё честно: G — сеть 2→12→12→2 (tanh), D — 2→16→16→1 (sigmoid), обучение SGD с батчем 32. Розовые точки рождаются из случайного шума. Дай ему 20–60 секунд: сначала хаос, потом розовое облако заползает на голубую форму. Скачущие loss — нормальная жизнь GAN, а не баг.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 07 LLM ================= -->
+<section class="sec" id="llm">
+  <div class="container">
+    <header class="sec-head reveal">
+      <p class="kicker mono">07 · большие языковые модели</p>
+      <h2>ChatGPT, Claude, Qwen: <span class="grad-text">что внутри</span></h2>
+      <p class="lede">Сюрприз: внутри у всех одно и то же — <b>Transformer</b> (2017, статья «Attention Is All You Need»), а точнее его decoder-only разновидность. Модель решает одну задачу: «по предыдущим токенам предскажи следующий». Всё остальное — рассуждения, код, переводы — эмерджентные навыки этой задачи на гигантском масштабе.</p>
+    </header>
+
+    <article class="card wide reveal">
+      <h3>Путь текста через LLM, слой за слоем</h3>
+      <div class="steps4">
+        <div class="s4"><b class="mono">1 · токенизация</b><p>Текст режется на токены — кусочки слов (BPE). «нейросети» может стать «нейро»+«сети». Каждому токену — номер из словаря на ~100–250 тысяч штук.</p></div>
+        <div class="s4"><b class="mono">2 · эмбеддинги</b><p>Номер → вектор из тысяч чисел, «смысловые координаты» токена. Плюс информация о позиции (обычно RoPE — поворот векторов на угол, зависящий от места).</p></div>
+        <div class="s4"><b class="mono">3 · N блоков</b><p>Десятки-сотни одинаковых блоков: <b>self-attention</b> (слова обмениваются контекстом) + <b>FFN</b> (каждый токен «думает» сам). Вокруг — остаточные связи и LayerNorm, чтобы сигнал не терялся в глубине.</p></div>
+        <div class="s4"><b class="mono">4 · logits → токен</b><p>Последний вектор → оценки (logits) для всех токенов словаря → softmax в вероятности → выбор (сэмплирование). Выбранный токен дописывается ко входу — и цикл повторяется. Это авторегрессия.</p></div>
+      </div>
+      <p class="muted"><b>Внимание в двух словах:</b> каждый токен делает три вектора — Query («что я ищу»), Key («что у меня есть»), Value («что я передам»). Оценка совместимости = Q·K/√d, softmax превращает оценки в веса, и токен забирает взвешенную сумму Value других. Много «голов» смотрят с разных сторон: одна следит за грамматикой, другая — за тем, к кому относится «он». В decoder-only стоит причинная маска: слово видит только прошлое, не будущее.</p>
+    </article>
+
+    <div class="demo reveal" id="demo-llm">
+      <div class="demo-head"><span class="demo-dot"></span><h3>Три механизма LLM — потрогай каждый</h3></div>
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-ltab="tokens" role="tab">Токены</button>
+        <button class="tab" data-ltab="attn" role="tab">Внимание</button>
+        <button class="tab" data-ltab="gen" role="tab">Генерация</button>
+      </div>
+      <div class="tabpanel active" id="ltab-tokens">
+        <textarea id="tok-input" class="text-in area" rows="2" maxlength="220" aria-label="Текст для токенизации">Нейросети учатся на примерах, а не на правилах!</textarea>
+        <div class="tok-chips" id="tok-chips"></div>
+        <div class="stats" id="tok-stats"></div>
+        <p class="demo-foot in">Упрощённая BPE-подобная нарезка: частые слова целиком, длинные — на куски (продолжения помечены ##). ID — игрушечные, но принцип настоящий: модель видит числа, а не буквы. Заметь: пробелы и знаки препинания — тоже токены, а русский текст «дороже» английского по токенам.</p>
+      </div>
+      <div class="tabpanel" id="ltab-attn">
+        <div class="demo-controls row">
+          <select id="att-preset" class="select grow">
+            <option value="0" selected>Кот сел на коврик потому что он устал</option>
+            <option value="1">Маша взяла зонт потому что шёл дождь</option>
+            <option value="2">Робот поднял мяч и бросил его</option>
+          </select>
+        </div>
+        <p class="muted sm">Кликни слово — увидишь, на кого оно «смотрит» (весаAttention, причинная маска: только назад). Веса — учебная иллюстрация, рассчитанная для наглядности.</p>
+        <div class="att-chips" id="att-chips"></div>
+        <div class="att-grid">
+          <div class="att-bars" id="att-bars"></div>
+          <div class="cv cv-attn"><canvas id="att-heat" role="img" aria-label="Матрица внимания"></canvas></div>
+        </div>
+        <p class="demo-foot in" id="att-note"></p>
+      </div>
+      <div class="tabpanel" id="ltab-gen">
+        <div class="demo-controls row">
+          <select id="gen-preset" class="select grow">
+            <option value="0" selected>Столица Франции —</option>
+            <option value="1">Нейросети учатся</option>
+            <option value="2">Сегодня погода</option>
+          </select>
+          <button class="btn btn-sm" id="gen-reset">↺ Сброс</button>
+        </div>
+        <div class="gen-text" id="gen-text"></div>
+        <p class="ctl-title">Вероятности следующего токена · softmax(logits / T)</p>
+        <div class="gen-bars" id="gen-bars"></div>
+        <div class="demo-controls row">
+          <label class="rng wide"><span>Температура T</span><input id="gen-temp" type="range" min="0.1" max="2" step="0.05" value="0.7"><output>0.70</output></label>
+          <button class="btn btn-primary btn-sm" id="gen-sample">🎲 Сэмплировать</button>
+          <button class="btn btn-sm" id="gen-greedy">Жадно (argmax)</button>
+        </div>
+        <p class="demo-foot in" id="gen-status">T→0: модель всегда берёт максимум (скучно и уверенно). T↑: распределение flattening, растёт шанс редких слов (творчество и бред). Настоящие LLM делают ровно это — миллиарды параметров ради одной таблицы вероятностей. Игрушечные logits, настоящий softmax и сэмплирование.</p>
+      </div>
+    </div>
+
+    <div class="tbl-wrap reveal">
+      <table class="tbl model-tbl">
+        <thead><tr><th>Модель</th><th>Кто</th><th>Архитектура</th><th>Чем отличается</th></tr></thead>
+        <tbody>
+          <tr><td><b>ChatGPT / GPT-4</b></td><td>OpenAI</td><td>decoder-only Transformer</td><td>RLHF-выравнивание, мультимодальность, инструменты</td></tr>
+          <tr><td><b>Claude</b></td><td>Anthropic</td><td>decoder-only Transformer</td><td>Constitutional AI (RLAIF): модель криткует себя по «конституции» принципов</td></tr>
+          <tr><td><b>Qwen</b></td><td>Alibaba</td><td>decoder-only Transformer</td><td>открытые веса, сильный мультиязык, версии MoE, GQA</td></tr>
+          <tr><td><b>Gemini</b></td><td>Google</td><td>мультимодальный Transformer</td><td>текст+картинки+звук с рождения, MoE-варианты</td></tr>
+          <tr><td><b>Llama</b></td><td>Meta</td><td>decoder-only Transformer</td><td>открытые веса, RoPE, GQA — стандарт опенсорса</td></tr>
+          <tr><td><b>DeepSeek</b></td><td>DeepSeek</td><td>Transformer, MoE</td><td>MLA-attention (сжатый KV-кэш), дёшево и мощно</td></tr>
+          <tr><td><b>Mistral / Mixtral</b></td><td>Mistral AI</td><td>Transformer / MoE</td><td>открытые веса, sliding window, эксперты</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid3 reveal">
+      <article class="card mini"><h4>Как их выращивают</h4><p><b>1.</b> Предобучение (self-supervised): триллионы токенов, задача «следующий токен». <b>2.</b> SFT: тысячи идеальных диалогов с учителем. <b>3.</b> RLHF/DPO: люди сравнивают ответы, модель учится предпочтениям. Отсюда «полезность» и отказ от вредных запросов.</p></article>
+      <article class="card mini"><h4>Инженерные трюки</h4><p><b>MoE:</b> вместо одной FFN — десятки «экспертов», роутер включает 2 из них на токен: параметров много, вычислений мало. <b>GQA/MLA:</b> общий KV для групп голов. <b>KV-кэш:</b> не пересчитывать прошлое при каждом новом токене. <b>RoPE:</b> позиции через повороты.</p></article>
+      <article class="card mini"><h4>Границы и галлюцинации</h4><p>LLM — предсказатель продолжений, а не база фактов: правдоподобное ≠ правдивое. Контекстное окно ограничено (хоть и до миллионов токенов). Знания застыли на дате обучения — свежие факты дают через поиск (RAG) и инструменты.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 08 ПЕСОЧНИЦА ================= -->
+<section class="sec" id="playground">
+  <div class="container">
+    <header class="sec-head reveal">
+      <p class="kicker mono">08 · песочница</p>
+      <h2>Собери и обучи <span class="grad-text">свою нейросеть</span></h2>
+      <p class="lede">Три входа A, B, C (каждый 0 или 1) и задача-операция: OR, AND или XOR. Сеть должна выдавать правильный бит для всех 8 комбинаций. Ты выбираешь архитектуру и гиперпараметры — и наблюдаешь настоящий градиентный спуск: веса на связях, сигналы в нейронах, падающую ошибку. Никаких заготовленных анимаций — каждый кадр считается заново.</p>
+    </header>
+
+    <div class="note reveal"><b>Спойлер-эксперимент:</b> OR и AND сеть выучит даже без скрытых слоёв. XOR — никогда: он линейно неразделим, и доказательство этого (Минский и Пейперт, 1969) заморозило нейросети на 15 лет. Добавь хотя бы один скрытый слой — и увидишь, как глубина решает то, что ширина не может.</div>
+
+    <div class="demo pg reveal" id="demo-pg">
+      <div class="demo-head"><span class="demo-dot"></span><h3>Конструктор MLP · forward + backprop в браузере</h3><span class="demo-status" id="pg-status">готова к обучению</span></div>
+      <div class="demo-body pg-grid">
+        <div class="demo-controls pg-controls">
+          <p class="ctl-title">Задача (логическая операция)</p>
+          <div class="seg" id="pg-op">
+            <button class="seg-btn" data-op="OR">OR</button>
+            <button class="seg-btn" data-op="AND">AND</button>
+            <button class="seg-btn active" data-op="XOR">XOR</button>
+          </div>
+          <p class="ctl-title">Текущий вход (сигнал на схеме)</p>
+          <div class="probes">
+            <button class="probe on" id="pg-a">A<span>1</span></button>
+            <button class="probe" id="pg-b">B<span>0</span></button>
+            <button class="probe on" id="pg-c">C<span>1</span></button>
+          </div>
+          <p class="ctl-title">Скрытые слои</p>
+          <div class="step"><button class="step-btn" id="pg-lminus" aria-label="убрать слой">−</button><span class="step-val" id="pg-lval">1</span><button class="step-btn" id="pg-lplus" aria-label="добавить слой">+</button></div>
+          <div id="pg-layerrows" class="layer-rows"></div>
+          <p class="ctl-title">Активация скрытых слоёв</p>
+          <select id="pg-act" class="select">
+            <option value="tanh" selected>tanh — быстрый и надёжный</option>
+            <option value="sigmoid">сигмоида — классика, медленнее</option>
+            <option value="relu">ReLU — может «умирать» на малых сетях</option>
+          </select>
+          <label class="rng"><span>Learning rate</span><input id="pg-lr" type="range" min="0.02" max="1" step="0.02" value="0.3"><output>0.30</output></label>
+          <label class="rng"><span>Эпох/кадр</span><input id="pg-speed" type="range" min="1" max="60" value="8"><output>8</output></label>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="pg-play">▶ Обучать</button>
+            <button class="btn" id="pg-step">1 эпоха</button>
+            <button class="btn" id="pg-reset">↺ Веса</button>
+          </div>
+          <p class="ctl-title">Пресеты экспериментов</p>
+          <div class="btn-row wrap">
+            <button class="btn btn-sm" data-pgpreset="fast">XOR · быстро</button>
+            <button class="btn btn-sm" data-pgpreset="deep">Глубокая 3×4</button>
+            <button class="btn btn-sm" data-pgpreset="linear">Без слоёв (провал)</button>
+          </div>
+          <label class="switch"><input type="checkbox" id="pg-labels"><span class="sw-track"></span><span>Подписи весов на связях</span></label>
+          <button class="btn btn-sm" id="pg-export">⇩ Скачать модель (JSON)</button>
+        </div>
+        <div class="demo-view pg-view">
+          <div class="stats">
+            <div class="stat"><b id="pg-epoch">0</b><span>эпоха</span></div>
+            <div class="stat"><b id="pg-acc">0/8</b><span>точность</span></div>
+            <div class="stat"><b id="pg-loss">—</b><span>ошибка</span></div>
+            <div class="stat"><b id="pg-params">—</b><span>параметров</span></div>
+          </div>
+          <div class="cv cv-pg"><canvas id="pg-cv" role="img" aria-label="Схема обучаемой нейросети с весами и активациями"></canvas><div class="tooltip mono hide" id="pg-tooltip"></div></div>
+          <div class="pg-bottom">
+            <div class="tbl-wrap tt-wrap">
+              <table class="tbl tt">
+                <thead><tr><th>A</th><th>B</th><th>C</th><th>Цель</th><th>Сеть</th><th></th></tr></thead>
+                <tbody id="pg-table"></tbody>
+              </table>
+            </div>
+            <div class="pg-chart-wrap">
+              <p class="ctl-title">Ошибка по эпохам</p>
+              <div class="cv cv-chart tall"><canvas id="pg-chart" aria-label="График ошибки обучения"></canvas></div>
+            </div>
+          </div>
+          <p class="hint" id="pg-hint"></p>
+        </div>
+      </div>
+      <div class="demo-foot">Связь: толщина = |вес|, голубой = «+», розовый = «−». Яркость нейрона = его активация на текущем входе A,B,C. Наведи на связь или нейрон — увидишь числа. Кликни строку таблицы — прогонишь эту комбинацию через сеть. Одна эпоха = forward+backward по всем 8 комбинациям (полный батч), выход — сигмоида, loss — бинарная кросс-энтропия.</div>
+    </div>
+
+    <div class="grid3 reveal">
+      <article class="card mini"><h4>Эксперимент 1</h4><p>XOR без скрытых слоёв: ошибка застрянет около 0.69, точность 4–6 из 8. Добавь слой из 3–4 нейронов — и за пару сотен эпох будет 8/8.</p></article>
+      <article class="card mini"><h4>Эксперимент 2</h4><p>Что эффективнее для XOR: 1 слой × 6 нейронов или 3 × 3? Сравни число эпох и параметров. Глубже — не всегда лучше на простых задачах.</p></article>
+      <article class="card mini"><h4>Эксперимент 3</h4><p>lr = 0.02 против lr = 0.9: понаблюдай за графиком. Большой шаг ускоряет, но может колотить ошибку; ReLU на 2-нейронных слоях часто «умирает» — все нули.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 09 ТЕСТ ================= -->
+<section class="sec" id="quiz">
+  <div class="container">
+    <header class="sec-head reveal">
+      <p class="kicker mono">09 · проверь себя</p>
+      <h2>Семь вопросов — <span class="grad-text">и ты понял</span></h2>
+      <p class="lede">Без оценок и таймеров. Неправильный ответ — это просто ещё одно объяснение.</p>
+    </header>
+    <div class="demo reveal"><div class="demo-body pad"><div id="quiz-root"></div></div></div>
+
+    <div class="grid2 reveal" id="glossary">
+      <article class="card">
+        <h3>Карманный словарь</h3>
+        <details class="gloss"><summary>Эпоха / батч</summary><p>Эпоха — один полный проход по датасету. Батч — пачка примеров, обрабатываемая за один шаг обновления весов.</p></details>
+        <details class="gloss"><summary>Learning rate (lr)</summary><p>Размер шага, которым веса двигаются против градиента. Главный гиперпараметр: 0.001–0.1 для больших сетей, больше — для игрушечных.</p></details>
+        <details class="gloss"><summary>Градиент / backprop</summary><p>Градиент — направление самого крутого роста ошибки по каждому весу. Backprop — алгоритм, вычисляющий все градиенты за один обратный проход по правилу цепочки.</p></details>
+        <details class="gloss"><summary>Loss (функция потерь)</summary><p>Число «насколько сеть ошиблась». MSE для чисел, кросс-энтропия для классов. Обучение = минимизация loss.</p></details>
+        <details class="gloss"><summary>Переобучение</summary><p>Сеть вызубрила тренировочные примеры и проваливается на новых. Лечение: больше данных, train/test-разделение, dropout, ранняя остановка.</p></details>
+      </article>
+      <article class="card">
+        <h3>Словарь, часть 2 · и куда расти</h3>
+        <details class="gloss"><summary>Токен / эмбеддинг</summary><p>Токен — кусочек текста, единица входа LLM. Эмбеддинг — вектор-«координаты смысла» токена; близкие смыслы — близкие векторы.</p></details>
+        <details class="gloss"><summary>Инференс</summary><p>Применение обученной сети (без обновления весов). Всё, что делает ChatGPT при ответе тебе, — инференс.</p></details>
+        <details class="gloss"><summary>Параметры / веса</summary><p>Все настраиваемые числа сети: веса связей + смещения. «7B» у Llama — 7 миллиардов таких чисел.</p></details>
+        <ul class="dots links">
+          <li><a href="https://www.3blue1brown.com/topics/neural-networks" target="_blank" rel="noopener">3Blue1Brown — визуальная серия про нейросети</a></li>
+          <li><a href="https://playground.tensorflow.org" target="_blank" rel="noopener">TensorFlow Playground — ещё одна песочница</a></li>
+          <li><a href="https://www.youtube.com/watch?v=kCc8FmEb1nY" target="_blank" rel="noopener">Karpathy — пишем GPT с нуля за 2 часа</a></li>
+          <li><a href="https://d2l.ai" target="_blank" rel="noopener">d2l.ai — бесплатный учебник с кодом</a></li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container foot-grid">
+    <div>
+      <a class="logo" href="#top"><span>Нейро<b>Лаб</b></span></a>
+      <p class="muted sm">Интерактивный учебник по нейросетям. Чистые HTML + CSS + JavaScript, ни одной библиотеки, ни одного запроса к серверу: все сети обучаются на твоём устройстве.</p>
+    </div>
+    <div>
+      <p class="ctl-title">Главы</p>
+      <nav class="foot-links"><a href="#basics">Основы</a><a href="#types">Типы</a><a href="#learning">Обучение</a><a href="#cnn">CNN</a><a href="#rnn">RNN</a><a href="#gan">GAN</a><a href="#llm">LLM</a><a href="#playground">Песочница</a></nav>
+    </div>
+    <div>
+      <p class="ctl-title">Проект</p>
+      <nav class="foot-links"><a href="#quiz">Проверь себя</a><a href="#glossary">Словарь</a><a href="https://github.com" target="_blank" rel="noopener">GitHub (подставь свой репозиторий)</a></nav>
+      <p class="muted sm mono">MIT License · <span id="year">2026</span></p>
+    </div>
+  </div>
+</footer>
+
+<button class="totop" id="totop" aria-label="Наверх">↑</button>
+<noscript><div class="noscript">Для интерактивных демонстраций нужен включённый JavaScript.</div></noscript>
+</body>
+</html>

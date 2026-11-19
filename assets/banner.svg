@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1020"/><stop offset="1" stop-color="#151d38"/>
+    </linearGradient>
+    <linearGradient id="tx" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#a78bfa"/><stop offset=".5" stop-color="#22d3ee"/><stop offset="1" stop-color="#ff7ac8"/>
+    </linearGradient>
+    <radialGradient id="gl" cx=".8" cy=".2" r="1">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity=".18"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="300" fill="url(#bg)"/>
+  <rect width="1200" height="300" fill="url(#gl)"/>
+  <g stroke="#8b5cf6" stroke-opacity=".4" stroke-width="1.5">
+    <path d="M950 60 L1040 150 M950 240 L1040 150 M1040 150 L1130 90 M1040 150 L1130 210 M860 150 L950 60 M860 150 L950 240"/>
+  </g>
+  <g>
+    <circle cx="860" cy="150" r="10" fill="#a78bfa"/><circle cx="950" cy="60" r="10" fill="#22d3ee"/>
+    <circle cx="950" cy="240" r="10" fill="#22d3ee"/><circle cx="1040" cy="150" r="14" fill="url(#tx)"/>
+    <circle cx="1130" cy="90" r="10" fill="#ff7ac8"/><circle cx="1130" cy="210" r="10" fill="#a3e635"/>
+  </g>
+  <text x="70" y="130" font-size="58" font-weight="800" fill="url(#tx)">НЕЙРОЛАБ</text>
+  <text x="70" y="180" font-size="24" fill="#e9e9f4">Интерактивный учебник по нейросетям</text>
+  <text x="70" y="220" font-size="17" fill="#a6acc9">нейрон · CNN · RNN · GAN · Transformer · конструктор с настоящим backprop</text>
+  <text x="70" y="258" font-size="14" fill="#6f7699" font-family="monospace">чистые HTML + CSS + JS · без библиотек · GitHub Pages ready</text>
+</svg>
